@@ -7,9 +7,12 @@
 <script>
 export default {
   name: 'notice',
+  props: [
+    'table'
+  ],
   data () {
     return {
-      msg: ' 언제다하냐 ㅎㅎㅎㅎ'
+      msg: 'notice'
     }
   }
 }

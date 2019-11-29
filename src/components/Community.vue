@@ -9,7 +9,7 @@ export default {
   name: 'community',
   data () {
     return {
-      msg: '좆목질하자'
+      msg: 'community'
     }
   }
 }

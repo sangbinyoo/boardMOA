@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
 import Register from '@/components/Register'
+import Login from '@/components/Login'
 import Mypage from '@/components/Mypage'
 import Community from '@/components/Community'
 import Notice from '@/components/Notice'
@@ -20,6 +21,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/mypage',

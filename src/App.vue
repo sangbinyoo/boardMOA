@@ -1,7 +1,24 @@
 <template>
   <div id="app">
     <header>
-      <span>board MOA</span>
+      <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar-brand href="/">보드 모아</b-navbar-brand>
+        <b-button href="/login">로그인</b-button>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item href="/">홈</b-nav-item>
+            <b-nav-item-dropdown text="보드 게임" no-caret>
+              <b-dropdown-item href="/game/tichu">티츄</b-dropdown-item>
+              <b-dropdown-item href="/game/sedu">세듀</b-dropdown-item>
+              <b-dropdown-item href="/game/climb">자작게임</b-dropdown-item>
+              <b-dropdown-item href="/game">더 보기..</b-dropdown-item>
+            </b-nav-item-dropdown>
+            <b-nav-item href="/community">커뮤니티</b-nav-item>
+            <b-nav-item href="/notice">공지사항</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
     </header>
     <main>
       <img src="./assets/title_banner.png" alt="Vue.js PWA">
@@ -32,23 +49,7 @@ main {
   text-align: center;
   margin-top: 40px;
 }
-
-header {
-  margin: 0;
-  height: 56px;
-  padding: 0 16px 0 24px;
-  background-color: #35495E;
-  color: #ffffff;
-}
-
-header span {
-  display: block;
-  position: relative;
-  font-size: 20px;
-  line-height: 1;
-  letter-spacing: .02em;
-  font-weight: 400;
-  box-sizing: border-box;
-  padding-top: 16px;
+header nav{
+  z-index: 10;
 }
 </style>
