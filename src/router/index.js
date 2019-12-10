@@ -28,6 +28,11 @@ export default new Router({
       component: Login
     },
     {
+      path: '/logout',
+      redirect: '/login',
+      name: 'Logout'
+    },
+    {
       path: '/mypage',
       name: 'MyPage',
       component: Mypage

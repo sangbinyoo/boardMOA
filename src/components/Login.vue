@@ -1,7 +1,7 @@
 <template>
   <b-container class="login" fluid>
     <h2>{{ msg }}</h2>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onSubmit" v-if="show">
       <b-form-group
         id="input-group-1"
         label="아이디"
@@ -40,6 +40,7 @@
 
 
 <script>
+  const axios = require('axios')
   export default {
     name: 'login',
     data () {
@@ -52,10 +53,23 @@
         show: true
       }
     },
+    created () {
+      if (this.$cookies.isKey('user')) {
+        this.$cookies.remove('user')
+      }
+    },
     methods: {
       onSubmit (evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        axios.post('/api/user/login', {data: this.form}).then(res => {
+          if (res.data.status === 300) {
+            // set cookie and redirect /
+            this.$cookies.set('user', res.data.data)
+            window.location.pathname = '/'
+          } else {
+            console.log('로그인을 확인해주세요')
+          }
+        })
       }
     }
   }

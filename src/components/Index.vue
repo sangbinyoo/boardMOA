@@ -2,7 +2,6 @@
   <b-container class="index" fluid>
     <h2>{{ msg }}</h2>
 
-    <
     <b-carousel
       id="main-slide-banner"
       v-model="slide"

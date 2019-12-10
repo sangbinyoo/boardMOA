@@ -3,11 +3,13 @@
     <header>
       <b-navbar toggleable="lg" type="dark" variant="info">
         <b-navbar-brand href="/">보드 모아</b-navbar-brand>
-        <b-button href="/login">로그인</b-button>
+        <b-button v-bind:href=logToggle>{{logCheck}}</b-button>
+        <b-badge pill variant="dark" v-if='seen'>{{ userid }}</b-badge>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item href="/">홈</b-nav-item>
+            <b-nav-item href="/mypage" v-if='seen'>마이 페이지</b-nav-item>
             <b-nav-item-dropdown text="보드 게임" no-caret>
               <b-dropdown-item href="/game/tichu">티츄</b-dropdown-item>
               <b-dropdown-item href="/game/sedu">세듀</b-dropdown-item>
@@ -21,7 +23,7 @@
       </b-navbar>
     </header>
     <main>
-      <img src="./assets/title_banner.png" alt="Vue.js PWA">
+      <img src="./assets/title_banner.png" alt="board MOA">
       <router-view></router-view>
     </main>
   </div>
@@ -29,7 +31,25 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {
+      logCheck: '로그인',
+      logToggle: '/login',
+      userid: '',
+      seen: false
+    }
+  },
+  methods: {
+  },
+  mounted () {
+    if (this.$cookies.isKey('user')) {
+      this.logCheck = '로그아웃'
+      this.logToggle = '/logout'
+      this.seen = true
+      this.userid = this.$cookies.get('user').id
+    }
+  }
 }
 </script>
 

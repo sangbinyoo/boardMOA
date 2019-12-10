@@ -1,15 +1,26 @@
 'use strict'
 
 require('./check-versions')()
-
+// mysql DB 추가
+const mysql      = require('mysql');
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'sunnyday1!usb',
+  database : 'boardmoa',
+  port     : '3306'
+});
+connection.connect();
 const config = require('../config')
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
-
 const opn = require('opn')
 const path = require('path')
 const express = require('express')
+// Expresss 미들웨어 불러오기
+const bodyParser = require('body-parser')
+
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
@@ -23,6 +34,10 @@ const autoOpenBrowser = !!config.dev.autoOpenBrowser
 const proxyTable = config.dev.proxyTable
 
 const app = express()
+//body-parser를 이용해 application/x-www-form-urlencoded 파싱
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+
 const compiler = webpack(webpackConfig)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -81,11 +96,39 @@ devMiddleware.waitUntilValid(() => {
   _resolve()
 })
 
+app.get('/api/user', function (req,res,next) {
+  res.send('회원정보 조회')
+})
+app.post('/api/user', function (req,res,next) {
+  console.log(req.body.data)
+  res.send('회원가입 완료')
+})
+app.post('/api/user/login', function (req,res,next) {
+  var sql = 'SELECT * from members where id = ' + connection.escape(req.body.data.memberid) + ' and password = ' + connection.escape(req.body.data.pw)
+  connection.query(sql, function (error, results, fields) {
+    if (error) {
+      console.log(error)
+    }else{
+      //id exist
+      if(results.length !== 0 && results.length === 1){
+        var res_data = { status: 300, data: results[0]}
+        res.cookie('user', results[0], { secure: true})
+      }
+      //id or password missing
+      else{
+        var res_data = { status: 400, data: 'miss'}
+      }
+      res.json(res_data)
+      res.end()      
+    }
+  })
+})
 const server = app.listen(port)
 
 module.exports = {
   ready: readyPromise,
   close: () => {
+    connection.end();    
     server.close()
   }
 }
