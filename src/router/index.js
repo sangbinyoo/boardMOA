@@ -7,7 +7,7 @@ import Mypage from '@/components/Mypage'
 import Community from '@/components/Community'
 import Notice from '@/components/Notice'
 import Game from '@/components/Game'
-
+import Write from '@/components/Write'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +51,11 @@ export default new Router({
       path: '/game',
       name: 'Game',
       component: Game
+    },
+    {
+      path: '/write',
+      name: 'Write',
+      component: Write
     }
   ],
   mode: 'history'

@@ -39,7 +39,7 @@
 <script>
   const axios = require('axios')
   export default {
-    name: 'login',
+    name: '커뮤니티',
     data () {
       return {
         form: {

@@ -95,13 +95,66 @@ devMiddleware.waitUntilValid(() => {
   }
   _resolve()
 })
+app.get('/api/community', function (req,res,next) {
+  var sql = 'SELECT post_no as No, category as 카테고리, title as 제목, writer as 작성자, content as 내용, posted_date as 등록일 FROM post ORDER BY POST_NO DESC LIMIT 10'
+  connection.query(sql, function (error, results, fields) {
+    if (error) {
+      console.log(error)
+    }else{
+      var res_data = { status: 200, data: results}
+      res.json(res_data)
+      res.end()
+    }
+  })
+})
+app.post('/api/community', function (req,res,next) {
+  var sql = 'INSERT INTO POST ( category, title, writer, content) VALUES ('
+  + connection.escape(req.body.form.category) + ', '
+  + connection.escape(req.body.form.title) + ', '
+  + connection.escape(req.body.form.writer) + ', '
+  + connection.escape(req.body.form.content) + ')'
+  connection.query(sql, function(error, results, fields) {
+    var res_data = { status: 0, message: ''}
 
+    if (error) {
+      console.log(error)      
+      res_data.status = 400
+      res_data.message = '오류가 발생했습니다. 잠시후 다시 시도해주세요.'
+      res.json(res_data)
+    }else{
+      res_data.status = 200
+      res_data.message = '등록되었습니다'
+    }
+    res.json(res_data)
+    res.end()      
+  })
+})
 app.get('/api/user', function (req,res,next) {
   res.send('회원정보 조회')
 })
+
 app.post('/api/user', function (req,res,next) {
-  console.log(req.body.data)
-  res.send('회원가입 완료')
+  var sql = 'INSERT INTO MEMBERS ( id, password, name, sex, email) VALUES ('
+  + connection.escape(req.body.data.memberid) + ', '
+  + connection.escape(req.body.data.pw) + ', '
+  + connection.escape(req.body.data.name) + ', '
+  + connection.escape(req.body.data.sex) + ','
+  + connection.escape(req.body.data.email) + ')'
+  connection.query(sql, function(error, results, fields) {
+    var res_data = { status: 0, message: ''}
+
+    if (error) {
+      console.log(error)      
+      res_data.status = 400
+      res_data.message = '오류가 발생했습니다. 잠시후 다시 시도해주세요.'
+      res.json(res_data)
+    }else{
+      res_data.status = 200
+      res_data.message = '회원가입이 완료되었습니다.'
+    }
+    res.json(res_data)
+    res.end()      
+  })
 })
 app.post('/api/user/login', function (req,res,next) {
   var sql = 'SELECT * from members where id = ' + connection.escape(req.body.data.memberid) + ' and password = ' + connection.escape(req.body.data.pw)

@@ -6,8 +6,6 @@
       id="main-slide-banner"
       v-model="slide"
       :interval="2000"
-      controls
-      indicators
       background="#ababab"
       img-width="1024"
       img-heihgt="480"
@@ -15,17 +13,10 @@
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
-      <b-carousel-slide
-            caption="First slide"
-            text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            img-src="https://picsum.photos/1024/480/?image=52"
-          ></b-carousel-slide>
+      <b-carousel-slide v-for="item in images" v-bind:key="item.id"
+      v-bind:img-src="item.url">
 
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54"></b-carousel-slide>
-
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=55"></b-carousel-slide>
+      </b-carousel-slide>
     </b-carousel>
     <b-row class="mt-4">
       <b-col md="6">
@@ -57,8 +48,16 @@ export default {
     return {
       slide: 0,
       sliding: null,
-      msg: '놀고싶은 보드게이머를 위한 놀이터 ! 모두 모여라 ~'
+      msg: '보드게이머 모두 모여라 ~~',
+      images: [
+        { id: 1, url: require('../assets/directive.jpg') },
+        { id: 2, url: require('../assets/wood_dice_tray.jpg') },
+        { id: 3, url: require('../assets/octopus_soccer.jpg') }
+      ]
     }
+  },
+  created () {
+
   },
   methods: {
     onSlideStart (slide) {

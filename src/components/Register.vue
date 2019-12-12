@@ -63,7 +63,6 @@
           placeholder="성함을 입력해 주세요."
         ></b-form-input>
       </b-form-group>
-      <!--
       <b-form-group
       id="fieldset-5"
       label="E-mail 주소"
@@ -76,7 +75,6 @@
           placeholder="E-mail 주소를 입력해 주세요."
         ></b-form-input>
       </b-form-group>
-      -->
 
       <b-form-group
       id="fieldset-6"
@@ -103,7 +101,11 @@
       return {
         form: {
           memberid: '',
-          pw: ''
+          pw: '',
+          pwcheck: '',
+          name: '',
+          email: '',
+          sex: 'M'
         },
         msg: '회원 가입',
         show: true
@@ -124,7 +126,8 @@
           return
         }
         axios.post('/api/user', {data: this.form}).then(res => {
-          console.log(res)
+          this.show = false
+          this.msg = '회원가입이 완료되었습니다.'
         })
       }
     }

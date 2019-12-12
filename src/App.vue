@@ -3,8 +3,8 @@
     <header>
       <b-navbar toggleable="lg" type="dark" variant="info">
         <b-navbar-brand href="/">보드 모아</b-navbar-brand>
-        <b-button v-bind:href=logToggle>{{logCheck}}</b-button>
-        <b-badge pill variant="dark" v-if='seen'>{{ userid }}</b-badge>
+        <b-button class="log_button" v-bind:href=logToggle>{{logCheck}}</b-button>
+        <b-badge pill class="bg_name" variant="dark" v-if='seen'>{{ userid }}</b-badge>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
@@ -57,7 +57,16 @@ export default {
 body {
   margin: 0;
 }
-
+.log_button {
+  position: absolute;
+  right:100px;
+  top:10px;
+}
+.bg_name {
+  position: absolute;
+  right:200px;
+  top:20px;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
